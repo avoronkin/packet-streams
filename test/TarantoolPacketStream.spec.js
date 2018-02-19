@@ -1,6 +1,5 @@
-const { IPROTO, REQUEST } = require('../lib/constants')
-const PacketStream = require('../lib/PacketStream')
-const { Decoder } = require('msgpack-lite')
+const { IPROTO, REQUEST } = require('./constants')
+const PacketStream = require('../lib/TarantoolPacketStream')
 const { Writable, Readable } = require('stream')
 const sinon = require('sinon')
 const assert = require('assert')
@@ -39,7 +38,6 @@ describe('tarantool-packet-stream', () => {
         const packetStream = new PacketStream()
 
         const spy = sinon.spy(function (data, enc, next) {
-
             next()
         })
 

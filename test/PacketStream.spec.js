@@ -1,13 +1,12 @@
 const { IPROTO, REQUEST } = require('../lib/constants')
 const PacketStream = require('../lib/PacketStream')
 const { Decoder } = require('msgpack-lite')
-const decoder = new Decoder()
 const { Writable, Readable } = require('stream')
 const sinon = require('sinon')
 const assert = require('assert')
 
 function pingCommand (sync) {
-    const buffer = Buffer.alloc(15)
+    const buffer = Buffer.alloc(14)
     buffer[0] = 0xce; buffer.writeUInt32BE(9, 1)
 
     buffer[5] = 0x82
@@ -31,20 +30,15 @@ describe('tarantool-packet-stream', () => {
                     pingCommand(2),
                     pingCommand(3)
                 ])
+
                 this.push(commands)
                 this.push(null)
             }
         })
 
-        const packetStream = new PacketStream({
-            // debug: true
-        })
+        const packetStream = new PacketStream()
 
         const spy = sinon.spy(function (data, enc, next) {
-            decoder.buffer = data
-            const head = decoder.fetch()
-            assert.equal(head[IPROTO.CODE], REQUEST.PING)
-            assert.equal(head[IPROTO.SYNC], 1)
 
             next()
         })
@@ -64,5 +58,8 @@ describe('tarantool-packet-stream', () => {
         })
 
         assert.equal(spy.calledThrice, true)
+        assert.equal(spy.firstCall.args[0].toString('hex'), '82004001ce00000001')
+        assert.equal(spy.secondCall.args[0].toString('hex'), '82004001ce00000002')
+        assert.equal(spy.thirdCall.args[0].toString('hex'), '82004001ce00000003')
     })
 })

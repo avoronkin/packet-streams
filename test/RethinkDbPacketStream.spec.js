@@ -1,7 +1,7 @@
 const { Writable, Readable } = require('stream')
 const sinon = require('sinon')
 const assert = require('assert')
-const RethinkDbPacketStream = require('../lib/RethinkDbPacketStream')
+const { RethinkDbPacketStream } = require('../')
 
 function packet (id) {
     //body

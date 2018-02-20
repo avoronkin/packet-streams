@@ -1,7 +1,7 @@
 const { Writable, Readable } = require('stream')
 const sinon = require('sinon')
 const assert = require('assert')
-const TarantoolPacketStream = require('../lib/TarantoolPacketStream')
+const { TarantoolPacketStream } = require('../')
 const REQUEST = {
     PING: 64,
 }

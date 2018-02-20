@@ -1,4 +1,4 @@
-const BsonPacketStream = require('../lib/BsonPacketStream')
+const { BsonPacketStream } = require('../')
 const { Writable, Readable } = require('stream')
 const sinon = require('sinon')
 const assert = require('assert')

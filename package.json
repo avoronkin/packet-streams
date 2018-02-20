@@ -1,13 +1,22 @@
 {
   "name": "packet-streams",
-  "version": "1.0.0",
-  "description": "length prefixed packets streams",
+  "version": "1.0.1",
+  "description": "streams for length-prefixed tcp packets",
+  "keywords": [
+      "binary",
+      "stream",
+      "prefixed",
+  ],
+  "repository": {
+      "type": "git",
+      "url": "git+ssh://git@github.com/avoronkin/packet-streams.git"
+  },
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Alexandr Voronkin <hello@elasticweb.ru>",
+  "license": "MIT",
   "devDependencies": {
     "mocha": "^5.0.1",
     "msgpack-lite": "^0.1.26",

@@ -1,7 +1,7 @@
 {
   "name": "packet-streams",
   "version": "1.0.0",
-  "description": "",
+  "description": "length prefixed packets streams",
   "main": "index.js",
   "scripts": {
     "test": "mocha --recursive"
@@ -10,9 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "mocha": "^5.0.1",
-    "msgpack-lite": "^0.1.26"
-  },
-  "dependencies": {
+    "msgpack-lite": "^0.1.26",
     "sinon": "^4.3.0"
   }
 }

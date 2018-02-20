@@ -1,32 +1,23 @@
 const { Writable, Readable } = require('stream')
 const sinon = require('sinon')
 const assert = require('assert')
-const TarantoolPacketStream = require('../lib/TarantoolPacketStream')
-const REQUEST = {
-    PING: 64,
+const RethinkDbPacketStream = require('../lib/RethinkDbPacketStream')
+
+function packet (id) {
+    //body
+    const body = Buffer.from(JSON.stringify({key: 'value'}))
+
+    const header = Buffer.alloc(12)
+    //token
+    header.writeUInt32LE(0, 0)
+    header.writeUInt32LE(id, 4)
+    //length
+    header.writeUInt32LE(body.byteLength, 8)
+
+    return Buffer.concat([header, body])
 }
 
-const IPROTO = {
-    CODE: 0x00,
-    SYNC: 0x01,
-}
-
-function packet (sync) {
-    const buffer = Buffer.alloc(14)
-    buffer[0] = 0xce; buffer.writeUInt32BE(9, 1)
-
-    buffer[5] = 0x82
-
-    buffer[6] = IPROTO.CODE
-    buffer[7] = REQUEST.PING
-
-    buffer[8] = IPROTO.SYNC
-    buffer[9] = 0xce; buffer.writeUInt32BE(sync, 10)
-
-    return buffer
-}
-
-describe('tarantool packet stream', () => {
+describe('rethinkdb packet stream', () => {
     it('split packets', async () => {
 
         const packetsStream = new Readable({
@@ -42,7 +33,7 @@ describe('tarantool packet stream', () => {
             }
         })
 
-        const splitStream = new TarantoolPacketStream({
+        const splitStream = new RethinkDbPacketStream({
             // debug: true
         })
 
@@ -63,8 +54,8 @@ describe('tarantool packet stream', () => {
         })
 
         assert.equal(write.calledThrice, true)
-        assert.equal(write.firstCall.args[0].toString('hex'), 'ce0000000982004001ce00000001')
-        assert.equal(write.secondCall.args[0].toString('hex'), 'ce0000000982004001ce00000002')
-        assert.equal(write.thirdCall.args[0].toString('hex'), 'ce0000000982004001ce00000003')
+        assert.equal(write.firstCall.args[0].toString('hex'), '00000000010000000f0000007b226b6579223a2276616c7565227d')
+        assert.equal(write.secondCall.args[0].toString('hex'), '00000000020000000f0000007b226b6579223a2276616c7565227d')
+        assert.equal(write.thirdCall.args[0].toString('hex'), '00000000030000000f0000007b226b6579223a2276616c7565227d')
     })
 })

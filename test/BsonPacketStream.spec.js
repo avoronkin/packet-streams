@@ -4,7 +4,7 @@ const sinon = require('sinon')
 const assert = require('assert')
 
 function packet () {
-    return new Buffer([0x05, 0x00, 0x00, 0x00, 0x00])
+    return Buffer.from([0x05, 0x00, 0x00, 0x00, 0x00])
 }
 
 describe('bson packet stream', () => {

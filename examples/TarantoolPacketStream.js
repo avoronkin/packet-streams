@@ -1,6 +1,6 @@
-const PacketStream = require('./PacketStream')
+const { PacketStreamDecoder } = require('../')
 
-module.exports = class TarantoolPacketStream extends PacketStream {
+module.exports = class TarantoolPacketStream extends PacketStreamDecoder {
     constructor (options = {}) {
         super(options)
         this._prefixLength = 5

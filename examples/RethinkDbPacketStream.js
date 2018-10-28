@@ -1,6 +1,6 @@
-const PacketStream = require('./PacketStream')
+const { PacketStreamDecoder } = require('../')
 
-module.exports = class RethinkDbPacketStream extends PacketStream {
+module.exports = class RethinkDbPacketStream extends PacketStreamDecoder {
     constructor (options = {}) {
         super(options)
         this._prefixLength = 12

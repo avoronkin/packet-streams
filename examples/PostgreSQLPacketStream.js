@@ -1,6 +1,6 @@
-const PacketStream = require('./PacketStream')
+const { PacketStreamDecoder } = require('../')
 
-module.exports = class PostgreSQLPacketStream extends PacketStream {
+module.exports = class PostgreSQLPacketStream extends PacketStreamDecoder {
     constructor (options = {}) {
         super(options)
         this._prefixLength = 5

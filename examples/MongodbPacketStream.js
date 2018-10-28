@@ -1,6 +1,6 @@
-const PacketStream = require('./PacketStream')
+const { PacketStreamDecoder } = require('../lib')
 
-module.exports = class BsonPacketStream extends PacketStream {
+module.exports = class MongodbPacketStream extends PacketStreamDecoder {
     constructor (options = {}) {
         super(options)
         this._prefixLength = 4

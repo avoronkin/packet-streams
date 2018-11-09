@@ -12,8 +12,8 @@ class MongodbPacketStream extends PacketStreamDecoder {
         this._maxLength = options.maxLength || 16777216
     }
 
-    getPacketLength (buffer) {
-        return buffer.readUInt32LE(0)
+    getPacketLength () {
+        return this.bl.readUInt32LE(0)
     }
 }
 

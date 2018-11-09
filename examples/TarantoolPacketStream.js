@@ -7,11 +7,11 @@ module.exports = class TarantoolPacketStream extends PacketStreamDecoder {
         this._maxLength = options.maxLength || 2147483648
     }
 
-    getPacketLength (buffer) {
-        if (buffer[0] !== 0xce) {
+    getPacketLength () {
+        if (this.bl.readInt8(0) !== 0xce) {
             throw new Error('invalid packet start')
         }
 
-        return buffer.readUInt32BE(1) + this._prefixLength
+        return this.bl.readUInt32BE(1) + this._prefixLength
     }
 }
